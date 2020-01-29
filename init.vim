@@ -3,10 +3,19 @@ set hidden
 " Plugins
 "===============================================================
 call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'preservim/nerdtree'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mattn/emmet-vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'npm install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+Plug 'preservim/nerdcommenter'
 call plug#end()
 
 "===============================================================
@@ -16,8 +25,8 @@ colorscheme gruvbox
 set relativenumber
 set background=dark
 set number 
-set tabstop=4
 set autochdir
+set tabstop=4
 set shiftwidth=4
 syntax on
 let g:coc_global_extensions = [
@@ -53,4 +62,8 @@ inoremap <Up> <Nop>
 inoremap <C-j> <Esc>:m .+1<CR>==gi
 inoremap <C-k> <Esc>:m .-2<CR>==gi
 inoremap jj <ESC>
-inoremap caps <ESC>
+" Emmet snippet on tab + use tab to indent
+let g:user_emmet_expandabbr_key='<Tab>'
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+nmap <Leader>py <Plug>(Prettier)
+let mapleader=","
