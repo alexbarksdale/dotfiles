@@ -16,10 +16,11 @@ Plug 'tpope/vim-surround'
 " Git stuff (2)
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+
 " Autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Javascript
+" Front End Goodies
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'styled-components/vim-styled-components'
@@ -27,23 +28,25 @@ Plug 'mattn/emmet-vim'
 
 " For awesome snippets
 Plug 'SirVer/ultisnips'
-let g:UltiSnipsSnippetDirectories = ['/users/bhalsted/.config/nvim/UltiSnips']
+let g:UltiSnipsSnippetDirectories = ['/users/alex/.config/nvim/UltiSnips']
 let g:UltiSnipsExpandTrigger="<tab>"
 " defaults to c-j and c-k
 let g:UltiSnipsJumpForwardTrigger="<c-h>"
 let g:UltiSnipsJumpBackwardTrigger="<c-t>"
 let g:UltiSnipsEditSplit="vertical"
+
 " Common language snippets
 Plug 'honza/vim-snippets'
 
 " Nerdtree
 Plug 'preservim/nerdtree'
 
-
+" Move multiple lines
+Plug 'matze/vim-move'
 " The status bar
 Plug 'itchyny/lightline.vim'
 let g:lightline = { 
-      \  'colorscheme': 'gruvbox',
+      \  'colorscheme': 'apprentice',
       \  'active': {
       \    'left': [['mode', 'paste'], ['readonly', 'relativepath', 'modified']],
       \  },
@@ -53,7 +56,9 @@ let g:lightline = {
       \}
 
 " Cool color theme
-Plug 'morhetz/gruvbox'
+" Plug 'arcticicestudio/nord-vim'
+Plug 'romainl/Apprentice'
+" Plug 'morhetz/gruvbox'
 call plug#end()
 
 set encoding=utf-8
@@ -65,7 +70,7 @@ set shiftwidth=4
 set expandtab
 set mouse=a
 set number
-set background=dark
+" set background=dark
 " So that gutter markers appear quicker
 set updatetime=100
 
@@ -73,8 +78,7 @@ set ignorecase
 set cursorline
 
 syntax on
-
-colorscheme gruvbox
+colorscheme apprentice
 let mapleader=","
 " For simple sizing of splits
 map - <C-W>-
@@ -87,12 +91,13 @@ map <C-l> <C-W>l
 map <C-f> :NERDTreeToggle<CR>
 nnoremap <Leader>pf :NERDTreeFind<CR>
 nnoremap <silent> <leader>c :GFiles<CR>
+let g:move_key_modifier = 'C'
 " Removes highlighting after you enter insert mode
 autocmd InsertEnter * :let @/=""
 inoremap jj <ESC>
+nnoremap ,b :Buffers<CR>
 "inoremap c. <ESC>:w<CR>
 "nnoremap c. <ESC>:w<CR>
-"nnoremap ,b :Buffers<CR>
 "nnoremap ,f :Files<CR>
 "nnoremap ,s :BLines<CR>
 "nnoremap ,l :Lines<CR>
