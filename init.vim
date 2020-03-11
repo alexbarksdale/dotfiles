@@ -1,3 +1,6 @@
+" ========================================
+" PLUGINS
+" ========================================
 call plug#begin('~/.vim/plugged')
 " Multi-Cursor
 Plug 'mg979/vim-visual-multi'
@@ -6,7 +9,6 @@ Plug 'mg979/vim-visual-multi'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Comments!
-" Plug 'preservim/nerdcommenter'
 Plug 'suy/vim-context-commentstring'
 Plug 'tpope/vim-commentary'
 
@@ -20,20 +22,29 @@ Plug 'airblade/vim-gitgutter'
 " Autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Front End Goodies
-Plug 'pangloss/vim-javascript'
+" Front End Goodies 
+Plug 'pangloss/vim-javascript' 
 Plug 'mxw/vim-jsx'
 Plug 'styled-components/vim-styled-components'
 Plug 'mattn/emmet-vim'
+Plug 'alvan/vim-closetag'
+" Hex colors
+Plug 'ap/vim-css-color' 
+
+" GoLang Support
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Wakatime
+Plug 'wakatime/vim-wakatime'
 
 " For awesome snippets
 Plug 'SirVer/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['/users/alex/.config/nvim/UltiSnips']
 let g:UltiSnipsExpandTrigger="<tab>"
 " defaults to c-j and c-k
-let g:UltiSnipsJumpForwardTrigger="<c-h>"
-let g:UltiSnipsJumpBackwardTrigger="<c-t>"
-let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsJumpForwardTrigger="<c-h>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-t>"
+" let g:UltiSnipsEditSplit="vertical"
 
 " Common language snippets
 Plug 'honza/vim-snippets'
@@ -45,8 +56,9 @@ Plug 'preservim/nerdtree'
 Plug 'matze/vim-move'
 " The status bar
 Plug 'itchyny/lightline.vim'
+Plug 'nicknisi/vim-base16-lightline'
 let g:lightline = { 
-      \  'colorscheme': 'apprentice',
+      \  'colorscheme': 'base16',
       \  'active': {
       \    'left': [['mode', 'paste'], ['readonly', 'relativepath', 'modified']],
       \  },
@@ -55,12 +67,33 @@ let g:lightline = {
       \  }
       \}
 
+
 " Cool color theme
 " Plug 'arcticicestudio/nord-vim'
-Plug 'romainl/Apprentice'
+" Plug 'romainl/Apprentice'
+Plug 'chriskempson/base16-vim'
 " Plug 'morhetz/gruvbox'
 call plug#end()
+" ========================================
+" TextEdit might fail if hidden is not set.
+set hidden
 
+" Some servers have issues with backup files.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Disables the second status line (using lightline)
+set noshowmode 
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
 set encoding=utf-8
 set termencoding=utf-8
 set termguicolors
@@ -70,16 +103,22 @@ set shiftwidth=4
 set expandtab
 set mouse=a
 set number
-" set background=dark
+set background=dark
 " So that gutter markers appear quicker
 set updatetime=100
 
 set ignorecase
 set cursorline
 
+" Automatically refresh any files that haven't been edited by Vim
+set autoread
+
 syntax on
-colorscheme apprentice
+colorscheme base16-default-dark
 let mapleader=","
+" ========================================
+" KEY MAPS
+" ========================================
 " For simple sizing of splits
 map - <C-W>-
 map + <C-W>+
@@ -89,9 +128,18 @@ map <C-j> <C-w>j
 map <C-k> <C-W>k
 map <C-l> <C-W>l
 map <C-f> :NERDTreeToggle<CR>
+nnoremap <C-j> :m .+1<CR>
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
 nnoremap <Leader>pf :NERDTreeFind<CR>
 nnoremap <silent> <leader>c :GFiles<CR>
 let g:move_key_modifier = 'C'
+" Disable arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 " Removes highlighting after you enter insert mode
 autocmd InsertEnter * :let @/=""
 inoremap jj <ESC>
@@ -115,6 +163,10 @@ nnoremap ,b :Buffers<CR>
 ""nmap <F8> :TagbarToggle<CR>
 
 
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx"
+autocmd BufNewFile,BufRead *.js set filetype=javascript.jsx
+autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+
 " delete the current buffer, but not the split
 nmap ,d :b#<bar>bd#<CR>
 
@@ -122,28 +174,9 @@ if executable('rg')
   let g:ackprg = 'rg --vimgrep'
 endif
 
-" ============== COC Example Config
-" TextEdit might fail if hidden is not set.
-set hidden
-
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=100
-
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-set signcolumn=yes
-
+" ================================================
+" CAUTION SCARY COC CONFIG BELOW
+" ============== COC Config ============== 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -177,6 +210,15 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Select similar text (CMD + D feature from VSCODE)
+nmap <expr> <silent> <M-d> <SID>select_current_word()
+function! s:select_current_word()
+  if !get(g:, 'coc_cursors_activated', 0)
+    return "\<Plug>(coc-cursors-word)"
+  endif
+  return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+endfunc
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -267,4 +309,13 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+let g:coc_global_extensions = [
+  \ 'coc-snippets',
+  \ 'coc-html',
+  \ 'coc-css',
+  \ 'coc-emmet',
+  \ 'coc-python',
+  \ 'coc-tsserver',
+  \ 'coc-go',
+  \ 'coc-json', 
+  \ ]
