@@ -4,7 +4,6 @@
 call plug#begin('~/.vim/plugged')
 " Multi-Cursor
 Plug 'mg979/vim-visual-multi'
-
 " FZF (fuzzy searching)
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -23,6 +22,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Front End Goodies 
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'pangloss/vim-javascript' 
 Plug 'mxw/vim-jsx'
 Plug 'styled-components/vim-styled-components'
@@ -33,6 +34,8 @@ Plug 'ap/vim-css-color'
 
 " GoLang Support
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Auto import packages in Go
+let g:go_fmt_command = "goimports"
 
 " Wakatime
 Plug 'wakatime/vim-wakatime'
@@ -41,10 +44,6 @@ Plug 'wakatime/vim-wakatime'
 Plug 'SirVer/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['/users/alex/.config/nvim/UltiSnips']
 let g:UltiSnipsExpandTrigger="<tab>"
-" defaults to c-j and c-k
-" let g:UltiSnipsJumpForwardTrigger="<c-h>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-t>"
-" let g:UltiSnipsEditSplit="vertical"
 
 " Common language snippets
 Plug 'honza/vim-snippets'
@@ -69,10 +68,8 @@ let g:lightline = {
 
 
 " Cool color theme
-" Plug 'arcticicestudio/nord-vim'
-" Plug 'romainl/Apprentice'
 Plug 'chriskempson/base16-vim'
-" Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 call plug#end()
 " ========================================
 " TextEdit might fail if hidden is not set.
@@ -115,6 +112,8 @@ set autoread
 
 syntax on
 colorscheme base16-default-dark
+highlight Normal guibg=black guifg=white
+" colorscheme gruvbox
 let mapleader=","
 " ========================================
 " KEY MAPS
@@ -133,7 +132,7 @@ nnoremap <C-k> :m .-2<CR>==
 inoremap <C-j> <Esc>:m .+1<CR>==gi
 inoremap <C-k> <Esc>:m .-2<CR>==gi
 nnoremap <Leader>pf :NERDTreeFind<CR>
-nnoremap <silent> <leader>c :GFiles<CR>
+nnoremap <expr> <leader>c (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<CR>"
 let g:move_key_modifier = 'C'
 " Disable arrow keys
 noremap <Up> <Nop>
@@ -238,6 +237,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 " Format on save
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
