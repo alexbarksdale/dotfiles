@@ -2,17 +2,14 @@
 " PLUGINS
 " ========================================
 call plug#begin('~/.vim/plugged')
-" Multi-Cursor
-Plug 'mg979/vim-visual-multi'
+
 " FZF (fuzzy searching)
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
 " Comments!
 Plug 'suy/vim-context-commentstring'
 Plug 'tpope/vim-commentary'
-
-" Change surrounding
-Plug 'tpope/vim-surround'
 
 " Git stuff (2)
 Plug 'tpope/vim-fugitive'
@@ -22,22 +19,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Front End Goodies 
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'pangloss/vim-javascript' 
-Plug 'mxw/vim-jsx'
+Plug 'sheerun/vim-polyglot'
 Plug 'styled-components/vim-styled-components'
 Plug 'mattn/emmet-vim'
 Plug 'alvan/vim-closetag'
-" Hex colors
 Plug 'ap/vim-css-color' 
+Plug 'tpope/vim-surround'
 
-" GoLang Support
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" Auto import packages in Go
-let g:go_fmt_command = "goimports"
-
-" Wakatime
+" Wakatime to track productivity metrics
 Plug 'wakatime/vim-wakatime'
 
 " For awesome snippets
@@ -45,19 +34,35 @@ Plug 'SirVer/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['/users/alex/.config/nvim/UltiSnips']
 let g:UltiSnipsExpandTrigger="<tab>"
 
-" Common language snippets
+" Language support
+Plug 'pangloss/vim-javascript' 
+Plug 'leafgarland/typescript-vim'
+" Plug 'mxw/vim-jsx'
 Plug 'honza/vim-snippets'
+Plug 'tell-k/vim-autopep8'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Auto import packages in Go
+let g:go_fmt_command = "goimports"
 
-" Nerdtree
+" All kindsss of treeesss
 Plug 'preservim/nerdtree'
+Plug 'mbbill/undotree'
 
 " Move multiple lines
 Plug 'matze/vim-move'
+
+" Multi-Cursor
+Plug 'mg979/vim-visual-multi'
+
+" Cool color theme
+Plug 'chriskempson/base16-vim'
+Plug 'morhetz/gruvbox'
+
 " The status bar
 Plug 'itchyny/lightline.vim'
 Plug 'nicknisi/vim-base16-lightline'
 let g:lightline = { 
-      \  'colorscheme': 'base16',
+      \  'colorscheme': 'gruvbox',
       \  'active': {
       \    'left': [['mode', 'paste'], ['readonly', 'relativepath', 'modified']],
       \  },
@@ -67,9 +72,6 @@ let g:lightline = {
       \}
 
 
-" Cool color theme
-Plug 'chriskempson/base16-vim'
-Plug 'morhetz/gruvbox'
 call plug#end()
 " ========================================
 " TextEdit might fail if hidden is not set.
@@ -90,34 +92,46 @@ set noshowmode
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-set signcolumn=yes
+" set signcolumn=yes
 set encoding=utf-8
 set termencoding=utf-8
 set termguicolors
 
+set noswapfile
+set undodir=~/.vim/undodir
+set undofile
+set nowrap
 set tabstop=4
 set shiftwidth=4
+set smartindent
+set autoindent
 set expandtab
 set mouse=a
+set ignorecase
 set number
 set background=dark
 " So that gutter markers appear quicker
 set updatetime=100
 
-set ignorecase
-set cursorline
-
 " Automatically refresh any files that haven't been edited by Vim
 set autoread
 
 syntax on
-colorscheme base16-default-dark
-highlight Normal guibg=black guifg=white
-" colorscheme gruvbox
-let mapleader=","
+" colorscheme base16-default-dark
+colorscheme gruvbox
+" Special settings with the base16-default-dark theme
+" highlight LineNr guibg=clear
+" highlight Normal guibg=black 
+" Remove VimGutter BG color
+highlight GitGutterAdd guibg=clear
+highlight GitGutterChange guibg=clear
+highlight GitGutterDelete guibg=clear
+highlight GitGutterChangeDelete guibg=clear
+
 " ========================================
 " KEY MAPS
 " ========================================
+let mapleader=","
 " For simple sizing of splits
 map - <C-W>-
 map + <C-W>+
@@ -134,6 +148,8 @@ inoremap <C-k> <Esc>:m .-2<CR>==gi
 nnoremap <Leader>pf :NERDTreeFind<CR>
 nnoremap <expr> <leader>c (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<CR>"
 let g:move_key_modifier = 'C'
+let g:python_highlight_space_errors = 0
+
 " Disable arrow keys
 noremap <Up> <Nop>
 noremap <Down> <Nop>
@@ -142,32 +158,24 @@ noremap <Right> <Nop>
 " Removes highlighting after you enter insert mode
 autocmd InsertEnter * :let @/=""
 inoremap jj <ESC>
-nnoremap ,b :Buffers<CR>
-"inoremap c. <ESC>:w<CR>
-"nnoremap c. <ESC>:w<CR>
-"nnoremap ,f :Files<CR>
-"nnoremap ,s :BLines<CR>
-"nnoremap ,l :Lines<CR>
-"nnoremap ,m :Marks<CR>
-"nnoremap ,a :Ag<CR>
-"nnoremap ,r :Rg<CR>
-"nnoremap ,qo :copen<CR>
-"nnoremap ,qn :cnext<CR>
-"nnoremap ,qp :cprev<CR>
-"nnoremap ,qq :cclose<CR>
-"nnoremap ,lo :lopen<CR>
-"nnoremap ,ln :lnext<CR>
-"nnoremap ,lp :lprev<CR>
-"nnoremap ,lq :lclose<CR>
-""nmap <F8> :TagbarToggle<CR>
-
-
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx"
-autocmd BufNewFile,BufRead *.js set filetype=javascript.jsx
-autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>s :BLines<CR>
+nnoremap <leader>l :Lines<CR>
+nnoremap <leader>u :UndotreeShow<CR>
 " delete the current buffer, but not the split
 nmap ,d :b#<bar>bd#<CR>
+" ========================================
+
+" AutoPep8 Config
+let g:autopep8_max_line_length=90
+let g:autopep8_on_save = 1
+let g:autopep8_disable_show_diff=1
+
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js,*.tsx"
+" autocmd BufNewFile,BufRead *.js set filetype=javascript.js
+" autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+autocmd BufNewFile,BufRead *.ts set filetype=typescript.tsx
+" autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 
 if executable('rg')
   let g:ackprg = 'rg --vimgrep'
@@ -314,8 +322,9 @@ let g:coc_global_extensions = [
   \ 'coc-html',
   \ 'coc-css',
   \ 'coc-emmet',
-  \ 'coc-python',
   \ 'coc-tsserver',
   \ 'coc-go',
+  \ 'coc-python',
   \ 'coc-json', 
   \ ]
+
