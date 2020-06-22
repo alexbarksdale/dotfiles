@@ -6,7 +6,8 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact"
+    "typescriptreact",
+    "graphql"
   ],
   "tsserver.enableJavascript": true,
   "python.formatting.provider": "autopep8"
