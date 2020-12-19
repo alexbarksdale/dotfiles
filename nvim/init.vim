@@ -32,8 +32,9 @@ Plug 'preservim/nerdtree'
 Plug 'mbbill/undotree'
 
 " Cool color themes
-Plug 'gruvbox-community/gruvbox'
+Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
+Plug 'lifepillar/vim-solarized8'
 
 " The status bar
 Plug 'itchyny/lightline.vim'
@@ -49,27 +50,20 @@ let g:lightline = {
 call plug#end()
 
 " -----------------------------------------------------------------------------
-" - Default settings -
+" - General settings -
 " -----------------------------------------------------------------------------
 syntax on
 
 let mapleader=","
-colorscheme gruvbox
 
-set signcolumn=yes
-set encoding=utf-8
-set termencoding=utf-8
-set undodir=~/.vim/undodir
-set tabstop=4
-set shiftwidth=4
+colorscheme gruvbox
 set background=dark
-set updatetime=50
-set cmdheight=2
-set shortmess+=c
-set colorcolumn=90
-set mouse=a
-set clipboard=unnamed
+
+set undodir=~/.vim/undodir
+set signcolumn=yes encoding=utf-8 termencoding=utf-8
+set mouse=a clipboard=unnamed shortmess+=c
 set completeopt=menuone,noinsert,noselect
+set tabstop=4 shiftwidth=4 cmdheight=2 colorcolumn=90 updatetime=50
 set termguicolors noswapfile undofile nowrap smartindent autoindent expandtab ignorecase
 set number hidden nobackup nowritebackup noshowmode autoread
 
@@ -160,8 +154,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Format on save
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
+" Utilities
 nmap <leader>rn <Plug>(coc-rename)
-xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>qf  <Plug>(coc-fix-current)
 

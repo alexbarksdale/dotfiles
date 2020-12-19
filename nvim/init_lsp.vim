@@ -19,14 +19,15 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'stsewd/fzf-checkout.vim'
 
-" Utilities
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+" Utilities/Quality of Life
+Plug 'prettier/vim-prettier'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'suy/vim-context-commentstring'
 Plug 'SirVer/ultisnips'
 Plug 'wakatime/vim-wakatime'
+Plug 'jiangmiao/auto-pairs'
 
 " Language support
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -60,20 +61,12 @@ syntax on
 
 colorscheme gruvbox
 
-set signcolumn=yes
-set encoding=utf-8
-set termencoding=utf-8
-set undodir=~/.vim/undodir
-set tabstop=4
-set shiftwidth=4
 set background=dark
-set updatetime=50
-set cmdheight=2
-set shortmess+=c
-set colorcolumn=90
-set mouse=a
-set clipboard=unnamed
+set undodir=~/.vim/undodir
 set completeopt=menuone,noinsert,noselect
+set updatetime=50 cmdheight=2 shortmess+=c
+set tabstop=4 shiftwidth=4 colorcolumn=90 pumheight=20
+set mouse=a signcolumn=yes encoding=utf-8 termencoding=utf-8 clipboard=unnamed
 set termguicolors noswapfile undofile nowrap smartindent autoindent expandtab ignorecase
 set number hidden nobackup nowritebackup noshowmode autoread
 
@@ -118,11 +111,15 @@ let $FZF_DEFAULT_OPTS='--reverse'
 " Nerdtree on startup
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
+" Prettier
+let g:prettier#autoformat_config_present = 1
+let g:prettier#autoformat_require_pragma = 0
+
 " -----------------------------------------------------------------------------
 " - LSP Config -
 " -----------------------------------------------------------------------------
-
 nnoremap <leader>gd :lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>gt :lua vim.lsp.buf.type_definition()<CR>
 nnoremap <leader>gi :lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>gh :lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>gr :lua vim.lsp.buf.references()<CR>
@@ -137,7 +134,5 @@ lua require'lspconfig'.tsserver.setup{ on_attach=require'completion'.on_attach }
 lua require'lspconfig'.pyls.setup{ on_attach=require'completion'.on_attach }
 lua require'lspconfig'.gopls.setup{ on_attach=require'completion'.on_attach }
 lua require'lspconfig'.rust_analyzer.setup{ on_attach=require'completion'.on_attach }
-
-command! Format execute 'lua vim.lsp.buf.formatting()'
 
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
