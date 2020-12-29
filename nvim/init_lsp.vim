@@ -7,9 +7,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
-" Neovim tree sitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
 " FZF (fuzzy searching)
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -38,13 +35,14 @@ Plug 'preservim/nerdtree'
 Plug 'mbbill/undotree'
 
 " Cool color themes
-Plug 'gruvbox-community/gruvbox'
+Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " The status bar
 Plug 'itchyny/lightline.vim'
 let g:lightline = { 
-      \  'colorscheme': 'gruvbox',
+      \  'colorscheme': 'dracula',
       \  'active': {
       \    'left': [['mode', 'paste'], ['readonly', 'relativepath', 'modified']],
       \  },
@@ -59,9 +57,9 @@ call plug#end()
 " -----------------------------------------------------------------------------
 syntax on
 
-colorscheme gruvbox
-
+colorscheme dracula
 set background=dark
+
 set undodir=~/.vim/undodir
 set completeopt=menuone,noinsert,noselect
 set updatetime=50 cmdheight=2 shortmess+=c
@@ -84,10 +82,6 @@ map <C-f> :NERDTreeToggle<CR>
 nmap <leader>gh :diffget //3<CR>
 nmap <leader>gu :diffget //2<CR>
 nmap <leader>gs :G<CR>
-inoremap <C-j> <Esc>:m .+1<CR>==gi
-inoremap <C-k> <Esc>:m .-2<CR>==gi
-nnoremap <C-j> :m .+1<CR>
-nnoremap <C-k> :m .-2<CR>==
 nnoremap <expr> <leader>c (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<CR>"
 nnoremap <Leader>pf :NERDTreeFind<CR>
 nnoremap <leader>gc :GCheckout<CR>
@@ -101,7 +95,6 @@ nnoremap <leader>u :UndotreeShow<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-let g:go_fmt_command = "goimports"
 let g:move_key_modifier = 'C'
 let g:rustfmt_autosave = 1
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js,*.tsx,*.ts"
@@ -114,6 +107,19 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 " Prettier
 let g:prettier#autoformat_config_present = 1
 let g:prettier#autoformat_require_pragma = 0
+
+" Go
+let g:go_fmt_command = "goimports"
+let g:go_list_type = 'quickfix'
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+
+" Completion
+let g:completion_menu_length=3
 
 " -----------------------------------------------------------------------------
 " - LSP Config -
@@ -129,10 +135,9 @@ nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
 let g:completion_confirm_key = "\<C-y>"
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 let g:completion_enable_snippet = 'UltiSnips'
-lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 lua require'lspconfig'.tsserver.setup{ on_attach=require'completion'.on_attach }
 lua require'lspconfig'.pyls.setup{ on_attach=require'completion'.on_attach }
 lua require'lspconfig'.gopls.setup{ on_attach=require'completion'.on_attach }
 lua require'lspconfig'.rust_analyzer.setup{ on_attach=require'completion'.on_attach }
 
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
