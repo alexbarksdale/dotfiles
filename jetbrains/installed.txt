@@ -1,0 +1,5 @@
+IdeaVIM
+com.vermouthx.idea
+com.wakatime.intellij.plugin
+idea.plugin.protoeditor
+ru.adelf.idea.dotenv
