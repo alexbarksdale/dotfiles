@@ -10,6 +10,7 @@ Plug 'ambv/black'
 Plug 'ayu-theme/ayu-vim'
 Plug 'dracula/vim'
 Plug 'gruvbox-community/gruvbox'
+Plug 'arzg/vim-colors-xcode'
 
 " trees
 Plug 'preservim/nerdtree'
