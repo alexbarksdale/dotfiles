@@ -10,6 +10,9 @@ nnoremap <Leader>pf :NERDTreeFind<CR>
 nnoremap <leader>s :BLines<CR>
 nnoremap <leader>u :UndotreeShow<CR>
 
+" create new tab based on current file
+nnoremap <leader>nt :tabnew %<CR>
+
 " git
 nnoremap <leader>gf :diffget //2<CR> " grabs diff A
 nnoremap <leader>gj :diffget //3<CR> " grabs diff B
