@@ -13,6 +13,7 @@ set wildignore+=**/ios/*
 set wildignore+=**/.git/*
 
 set hidden
+set relativenumber
 set noerrorbells
 set tabstop=4 softtabstop=4
 set shiftwidth=4
@@ -28,7 +29,7 @@ set signcolumn=yes
 set isfname+=@-@
 set nocompatible
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
 " delays and poor user experience.
 set updatetime=50
 

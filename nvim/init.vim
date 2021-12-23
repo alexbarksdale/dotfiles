@@ -35,14 +35,18 @@ Plug 'jiangmiao/auto-pairs'
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'ThePrimeagen/git-worktree.nvim'
 
 " status bar
 Plug 'itchyny/lightline.vim'
 
-" snipmate & deps
-Plug 'MarcWeber/vim-addon-mw-utils' " dep of vim-snipmate
-Plug 'tomtom/tlib_vim' " dep of vim-snipmate
-Plug 'garbas/vim-snipmate'
+" snippets
+Plug 'L3MON4D3/LuaSnip'
+Plug 'rafamadriz/friendly-snippets'
+
+" Plug 'MarcWeber/vim-addon-mw-utils' " dep of vim-snipmate
+" Plug 'tomtom/tlib_vim' " dep of vim-snipmate
+" Plug 'garbas/vim-snipmate'
 
 " signature help
 Plug 'ray-x/lsp_signature.nvim'

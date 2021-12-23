@@ -1,4 +1,4 @@
-nnoremap <leader>f <cmd>Telescope find_files<cr>
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>gr <cmd>Telescope live_grep<cr>
 nnoremap <leader>D <cmd>Telescope lsp_workspace_diagnostics<cr>
 nnoremap <leader>d <cmd>Telescope lsp_document_diagnostics<cr>

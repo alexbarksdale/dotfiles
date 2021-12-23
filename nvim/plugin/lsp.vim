@@ -15,6 +15,7 @@ inoremap <A-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap [c <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap ]c <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <leader>gw :lua require('telescope').extensions.git_worktree.git_worktrees()<CR>
+nnoremap <leader>fw :lua require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }<CR>
 
 lua << EOF
 local on_attach = function(client, bufnr)
@@ -28,3 +29,4 @@ require'lspconfig'.tsserver.setup{ on_attach=on_attach }
 require'lspconfig'.pyright.setup{ on_attach=on_attach }
 require'lspconfig'.yamlls.setup{}
 EOF
+
