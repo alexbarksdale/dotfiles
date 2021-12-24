@@ -18,6 +18,14 @@ nnoremap <leader>gf :diffget //2<CR> " grabs diff A
 nnoremap <leader>gj :diffget //3<CR> " grabs diff B
 nnoremap <leader>gs :G<CR>
 
+" yank from current position to the end
+nnoremap Y y$
+
+" eep things centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+
 augroup ALEX
     autocmd!
     " remove trailing white space
