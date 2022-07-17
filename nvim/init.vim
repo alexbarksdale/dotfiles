@@ -19,6 +19,7 @@ Plug 'mbbill/undotree'
 " language support
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'sheerun/vim-polyglot'
+Plug 'fatih/vim-go'
 
 " telescope requirements
 Plug 'nvim-lua/popup.nvim'

@@ -9,6 +9,7 @@ nnoremap <leader>lo <cmd>lua vim.lsp.buf.outgoing_calls()<CR>
 nnoremap <leader>li <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>lw <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <leader>lb <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <leader>di <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 nnoremap <S-k> <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <A-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 inoremap <A-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
