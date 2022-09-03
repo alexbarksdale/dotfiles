@@ -29,5 +29,17 @@ end
 require'lspconfig'.tsserver.setup{ on_attach=on_attach }
 require'lspconfig'.pyright.setup{ on_attach=on_attach }
 require'lspconfig'.yamlls.setup{}
+-- require("lspconfig").rust_analyzer.setup{}
+
+require('lspconfig').rust_analyzer.setup {
+    on_attach = on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+        cargo = { loadOutDirsFromCheck = true },
+        procMacro = { enable = true },
+        hoverActions = { references = true },
+    },
+  },
+}
 EOF
 

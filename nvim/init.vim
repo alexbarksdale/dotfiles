@@ -18,6 +18,7 @@ Plug 'mbbill/undotree'
 
 " language support
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'sheerun/vim-polyglot'
 Plug 'fatih/vim-go'
 
@@ -37,6 +38,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'ThePrimeagen/git-worktree.nvim'
+Plug 'github/copilot.vim'
 
 " status bar
 Plug 'itchyny/lightline.vim'

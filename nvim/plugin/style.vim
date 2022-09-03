@@ -10,7 +10,7 @@ set termguicolors
 let g:gruvbox_bold=0
 let ayucolor="mirage"
 " colorscheme xcodedark
-colorscheme gruvbox
+colorscheme ayu
 
 " Give more space for displaying messages.
 set cmdheight=1
