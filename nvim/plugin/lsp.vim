@@ -19,6 +19,12 @@ nnoremap <leader>gw :lua require('telescope').extensions.git_worktree.git_worktr
 nnoremap <leader>fw :lua require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }<CR>
 
 lua << EOF
+require'nvim-treesitter.configs'.setup {
+  autotag = {
+    enable = true,
+  }
+}
+
 local on_attach = function(client, bufnr)
     require "lsp_signature".setup({
         hint_prefix = "*"

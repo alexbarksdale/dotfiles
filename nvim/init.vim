@@ -33,6 +33,7 @@ Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'jiangmiao/auto-pairs'
+Plug 'norcalli/nvim-colorizer.lua'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -46,6 +47,11 @@ Plug 'itchyny/lightline.vim'
 " snippets
 Plug 'L3MON4D3/LuaSnip'
 Plug 'rafamadriz/friendly-snippets'
+
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install --frozen-lockfile --production',
+  \ 'for': ['javascript', 'typescript', 'css', 'graphql', 'yaml', 'html', 'json', 'typescriptreact'] }
 
 " Plug 'MarcWeber/vim-addon-mw-utils' " dep of vim-snipmate
 " Plug 'tomtom/tlib_vim' " dep of vim-snipmate

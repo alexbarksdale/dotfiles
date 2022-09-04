@@ -36,3 +36,5 @@ set updatetime=50
 set colorcolumn=80
 
 filetype plugin on
+
+

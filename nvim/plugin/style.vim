@@ -30,8 +30,16 @@ let g:lightline = {
       \  }
       \}
 
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+
 " auto formatting
 autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
 autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
 autocmd BufWritePre *.tsx lua vim.lsp.buf.formatting_sync(nil, 100)
 autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100)
+
+lua << EOF
+require'colorizer'.setup()
+EOF
+
