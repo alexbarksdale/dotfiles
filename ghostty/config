@@ -1,0 +1,9 @@
+font-size=15
+
+link-url = true
+
+window-decoration = true
+window-new-tab-position = end
+
+# background-opacity = 0.9
+# background-blur-radius = 20
