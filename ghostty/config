@@ -5,5 +5,7 @@ link-url = true
 window-decoration = true
 window-new-tab-position = end
 
+theme = Catppuccin frappe
+
 # background-opacity = 0.9
 # background-blur-radius = 20
