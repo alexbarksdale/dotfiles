@@ -45,7 +45,11 @@ git clone https://github.com/alexbarksdale/dotfiles.git
 # Tmux
 cp .tmux.conf ~/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-# Open tmux and press prefix + I to install plugins
+
+# Install tmux plugins:
+# 1. Open tmux
+# 2. Press prefix + I (capital I) to install plugins
+# TPM will clone: tmux-resurrect, tmux-continuum, catppuccin/tmux
 
 # Ghostty
 mkdir -p ~/.config/ghostty
