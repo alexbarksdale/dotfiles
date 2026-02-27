@@ -59,3 +59,13 @@ cp -r ghostty/* ~/.config/ghostty/
 mkdir -p ~/.config/nvim
 cp -r nvim/* ~/.config/nvim/
 ```
+
+## Tools
+
+### Atuin
+
+Shell history sync/search.
+
+```sh
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+```
