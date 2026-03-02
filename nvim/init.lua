@@ -253,6 +253,7 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
   'preservim/nerdtree',
+  'blazkowolf/gruber-darker.nvim',
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -302,7 +303,6 @@ require('lazy').setup({
   --
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
-
 
   -- NOTE: Plugins can specify dependencies.
   --
@@ -380,8 +380,12 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
       vim.keymap.set('n', '<leader>gr', builtin.live_grep, { desc = 'Live grep' })
-      vim.keymap.set('n', '<leader>D', function() builtin.diagnostics() end, { desc = 'Workspace diagnostics' })
-      vim.keymap.set('n', '<leader>d', function() builtin.diagnostics({ bufnr = 0 }) end, { desc = 'Document diagnostics' })
+      vim.keymap.set('n', '<leader>D', function()
+        builtin.diagnostics()
+      end, { desc = 'Workspace diagnostics' })
+      vim.keymap.set('n', '<leader>d', function()
+        builtin.diagnostics { bufnr = 0 }
+      end, { desc = 'Document diagnostics' })
       vim.keymap.set('n', '<leader>S', builtin.lsp_dynamic_workspace_symbols, { desc = 'Workspace symbols' })
       vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, { desc = 'Document symbols' })
       vim.keymap.set('n', '<leader>m', builtin.marks, { desc = 'Marks' })
@@ -822,7 +826,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'gruber-darker'
     end,
   },
 
