@@ -1,11 +1,13 @@
 font-size=15
+macos-option-as-alt = true
 
 link-url = true
 
 window-decoration = true
 window-new-tab-position = end
 
-theme = Catppuccin frappe
+# theme = Catppuccin frappe
+theme = "Gruber Darker"
 
 # background-opacity = 0.9
 # background-blur-radius = 20
