@@ -179,7 +179,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- NERDTree
 vim.keymap.set('n', '<C-f>', ':NERDTreeToggle<CR>', { desc = 'Toggle NERDTree' })
 vim.keymap.set('n', '<leader>pf', ':NERDTreeFind<CR>', { desc = 'Find current file in NERDTree' })
-vim.keymap.set('n', '<leader>t', '<cmd>tabnew<CR>', { desc = 'New tab' })
+vim.keymap.set('n', '<leader>nt', '<cmd>tabnew %<CR>', { desc = 'New tab (current file)' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
