@@ -179,6 +179,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- NERDTree
 vim.keymap.set('n', '<C-f>', ':NERDTreeToggle<CR>', { desc = 'Toggle NERDTree' })
 vim.keymap.set('n', '<leader>pf', ':NERDTreeFind<CR>', { desc = 'Find current file in NERDTree' })
+vim.keymap.set('n', '<leader>t', '<cmd>tabnew<CR>', { desc = 'New tab' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -194,14 +195,7 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- Ctrl+h/j/k/l navigation is handled by vim-tmux-navigator plugin
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -253,7 +247,7 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
   'preservim/nerdtree',
-  'blazkowolf/gruber-darker.nvim',
+  'christoomey/vim-tmux-navigator',
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -303,6 +297,7 @@ require('lazy').setup({
   --
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
+
 
   -- NOTE: Plugins can specify dependencies.
   --
@@ -380,12 +375,8 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
       vim.keymap.set('n', '<leader>gr', builtin.live_grep, { desc = 'Live grep' })
-      vim.keymap.set('n', '<leader>D', function()
-        builtin.diagnostics()
-      end, { desc = 'Workspace diagnostics' })
-      vim.keymap.set('n', '<leader>d', function()
-        builtin.diagnostics { bufnr = 0 }
-      end, { desc = 'Document diagnostics' })
+      vim.keymap.set('n', '<leader>D', function() builtin.diagnostics() end, { desc = 'Workspace diagnostics' })
+      vim.keymap.set('n', '<leader>d', function() builtin.diagnostics({ bufnr = 0 }) end, { desc = 'Document diagnostics' })
       vim.keymap.set('n', '<leader>S', builtin.lsp_dynamic_workspace_symbols, { desc = 'Workspace symbols' })
       vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, { desc = 'Document symbols' })
       vim.keymap.set('n', '<leader>m', builtin.marks, { desc = 'Marks' })
@@ -606,7 +597,7 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
-        -- rust_analyzer = {},
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -767,7 +758,8 @@ require('lazy').setup({
         -- <c-k>: Toggle signature help
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'default',
+        preset = 'super-tab',
+        ['<CR>'] = { 'accept', 'fallback' },
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -808,24 +800,11 @@ require('lazy').setup({
     },
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+  {
+    'blazkowolf/gruber-darker.nvim',
+    priority = 1000,
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+      require('gruber-darker').setup()
       vim.cmd.colorscheme 'gruber-darker'
     end,
   },
@@ -908,7 +887,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
@@ -917,6 +896,36 @@ require('lazy').setup({
     lazy = false,
     keys = {
       { '<leader>md', '<cmd>Markview toggle<cr>', desc = 'Toggle [M]arkdown Preview' },
+    },
+  },
+
+  {
+    'sindrets/diffview.nvim',
+    cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
+    keys = {
+      { '<leader>gd', '<CMD>DiffviewOpen<CR>', desc = 'Open Diffview (branch changes)' },
+      { '<leader>gh', '<CMD>DiffviewFileHistory %<CR>', desc = 'File History (current file)' },
+      { '<leader>gH', '<CMD>DiffviewFileHistory<CR>', desc = 'File History (all files)' },
+      { '<leader>gq', '<CMD>DiffviewClose<CR>', desc = 'Close Diffview' },
+    },
+    opts = {
+      hooks = {
+        view_opened = function(view)
+          local actions = require 'diffview.actions'
+          local panel = view.panel
+          if panel and panel.bufid then
+            vim.api.nvim_create_autocmd('CursorMoved', {
+              buffer = panel.bufid,
+              callback = function()
+                local item = panel:get_item_at_cursor()
+                if item and type(item.collapsed) ~= 'boolean' then
+                  actions.select_entry()
+                end
+              end,
+            })
+          end
+        end,
+      },
     },
   },
 
