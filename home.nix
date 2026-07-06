@@ -56,8 +56,6 @@ in
       k = "kubectl";
       api = "kubectl -n api";
       evp = "kubectl -n event-processor";
-      search = "kubectl -n search";
-      dag = "kubectl -n dagster";
     };
 
     profileExtra = ''
