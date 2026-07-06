@@ -1,71 +1,75 @@
 # dotfiles
 
-My personal configuration files.
+This repository is my macOS machine configuration.
+It uses nix-darwin, Home Manager, and nix-homebrew to make a new Mac reproducible from source-controlled configuration.
 
-## What's included
+## Layout
 
-| Config | Path on system | Description |
-|--------|---------------|-------------|
-| tmux | `~/.tmux.conf` | Tmux config with catppuccin theme, session persistence |
-| ghostty | `~/.config/ghostty/` | Ghostty terminal config + catppuccin themes |
-| nvim | `~/.config/nvim/` | Neovim config (kickstart.nvim based) |
-| iterm2 | — | iTerm2 profile export |
+| Path | Purpose |
+|------|---------|
+| `flake.nix` | Wires together nixpkgs, nix-darwin, Home Manager, and nix-homebrew. |
+| `configuration.nix` | System-level macOS defaults, nix-homebrew setup, Homebrew formulae, and Homebrew casks. |
+| `home.nix` | User-level Home Manager packages, shell configuration, Git settings, and symlinks. |
+| `home/.config/ghostty` | Ghostty config and themes. |
+| `home/.config/nvim` | Neovim config. |
+| `home/.config/tmux/tmux.conf` | tmux config source. |
+| `home/AGENTS.md` | Shared global agent instructions for Claude and Codex. |
+| `iterm2/Main.json` | iTerm2 profile export. |
+| `rebuild.sh` | Convenience wrapper around `darwin-rebuild switch`. |
 
-## Dependencies
+## Managed Files
 
-### Tmux
+Home Manager links config files from this repo into the home directory.
 
-- [tmux](https://github.com/tmux/tmux)
-- [TPM](https://github.com/tmux-plugins/tpm) (Tmux Plugin Manager) — install first, then press `prefix + I` inside tmux to install plugins
+| Source in repo | Target on machine |
+|----------------|-------------------|
+| `home/.config/ghostty` | `~/.config/ghostty` |
+| `home/.config/nvim` | `~/.config/nvim` |
+| `home/.config/tmux/tmux.conf` | `~/.tmux.conf` |
+| `home/AGENTS.md` | `~/.claude/CLAUDE.md` |
+| `home/AGENTS.md` | `~/.codex/AGENTS.md` |
 
-```sh
-# Install TPM
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-```
+The symlinks use `mkOutOfStoreSymlink` so edits in this repository are reflected directly in the live config paths.
 
-Plugins (installed automatically via TPM):
-- [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) — save/restore sessions
-- [tmux-continuum](https://github.com/tmux-plugins/tmux-continuum) — automatic session saving
-- [catppuccin/tmux](https://github.com/catppuccin/tmux) — theme (frappe flavor)
+## Package Ownership
 
-### Ghostty
+`configuration.nix` owns system-level Homebrew state through nix-darwin and nix-homebrew.
+Homebrew formulae go in `homebrew.brews`.
+Homebrew casks go in `homebrew.casks`.
+The Homebrew activation cleanup mode is set to `zap`, so unlisted formulae and casks are removed when the system is activated.
 
-- [Ghostty](https://ghostty.org/) — install the app, then symlink/copy the config
-
-### Neovim
-
-- [Neovim](https://neovim.io/) (>= 0.9)
+`home.nix` owns user-level packages and programs through Home Manager.
+This includes packages such as `jq`, `kubectl`, and `neovim`.
+It also configures shell behavior, Atuin, Bun, Git, and the dotfile symlinks.
 
 ## Setup
 
-```sh
-# Clone
-git clone https://github.com/alexbarksdale/dotfiles.git
+Install Nix first.
+This configuration assumes Determinate manages the Nix daemon, so `configuration.nix` sets `nix.enable = false`.
 
-# Tmux
-cp .tmux.conf ~/.tmux.conf
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-# Install tmux plugins:
-# 1. Open tmux
-# 2. Press prefix + I (capital I) to install plugins
-# TPM will clone: tmux-resurrect, tmux-continuum, catppuccin/tmux
-
-# Ghostty
-mkdir -p ~/.config/ghostty
-cp -r ghostty/* ~/.config/ghostty/
-
-# Neovim
-mkdir -p ~/.config/nvim
-cp -r nvim/* ~/.config/nvim/
-```
-
-## Tools
-
-### Atuin
-
-Shell history sync/search.
+Clone the repository to the path expected by `home.nix`.
 
 ```sh
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+mkdir -p ~/go/src/github.com/alexbarksdale
+git clone https://github.com/alexbarksdale/dotfiles.git ~/go/src/github.com/alexbarksdale/dotfiles
+cd ~/go/src/github.com/alexbarksdale/dotfiles
 ```
+
+Review `configuration.nix` and `home.nix` before activating on a new machine.
+When ready to apply the configuration, run:
+
+```sh
+./rebuild.sh
+```
+
+`rebuild.sh` symlinks this repository to `~/.dotfiles` and runs:
+
+```sh
+sudo darwin-rebuild switch --flake ~/.dotfiles#mac
+```
+
+## Notes
+
+Do not run a rebuild unless you are ready for nix-darwin and Home Manager to change the machine.
+Because Homebrew cleanup uses `zap`, anything installed through Homebrew but missing from `configuration.nix` can be removed during activation.
+tmux plugins are managed by TPM from inside tmux after the tmux config is linked.
