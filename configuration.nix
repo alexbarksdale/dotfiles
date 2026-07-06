@@ -25,4 +25,49 @@
     finder.CreateDesktop = true;          # clean desktop
     trackpad.Clicking = true;              # tap to click
   };
+  nix-homebrew = {
+    enable = true;
+    autoMigrate = true;
+    user = "alexbarksdale";
+  };
+  homebrew = {
+    enable = true;
+    onActivation.cleanup = "zap";  # remove anything not listed here
+    onActivation.autoUpdate = true;
+    onActivation.extraFlags = [ "--force" ];
+    brews = [
+      "bob"
+      "cocoapods"
+      "direnv"
+      "doctl"
+      "fastlane"
+      "fzf"
+      "gh"
+      "go"
+      "golang-migrate"
+      "openjdk"
+      "gradle"
+      "helm"
+      "kubectx"
+      "openjdk@21"
+      "pandoc"
+      "pipx"
+      "postgresql@14"
+      "protobuf"
+      "pyenv"
+      "rbenv"
+      "ripgrep"
+      "tmux"
+      "xcode-build-server"
+      "xcodegen"
+      "zig"
+      "zoxide"
+    ];
+    casks = [
+      "codex"
+      "ghostty"
+      "mactex-no-gui"
+      "ngrok"
+    ];
+  };
 }
