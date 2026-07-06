@@ -1,0 +1,14 @@
+# Alex's agent instructions
+
+These are common instructions for Alex's agents across all scenarios.
+
+## General Guidelines
+- Never use the em dash "—". Use plain dash "-" instead
+- When writing commit messages, NEVER auto-add your agent name as co-author
+- Never manually modify files that are marked as auto-generated
+- When writing or substantially editing long Markdown files, put each full sentence on its own line.
+Preserve normal Markdown structure, but avoid wrapping multiple sentences onto one physical line.
+- When making technical decisions, do not give much weight to development cost.
+Instead, prefer quality, simplicity, robustness, scalability, and long term maintainability.
+- Apply high standard to engineering excellence: lint, test failures, and test flakiness.
+If you see one, even if it is not caused by what you are working on right now, still get it fixed. However, if you suspect another agent is working on instroduced it, use your judgement on whether to avoid making changes that overlap with the other agent.

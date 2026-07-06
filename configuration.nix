@@ -9,7 +9,7 @@
 
   system.primaryUser = "alexbarksdale";
   users.users.alexbarksdale = {
-    home = "/Users/alexbarksdale/";
+    home = "/Users/alexbarksdale";
   };
   system.stateVersion = 6;
   system.defaults = {
