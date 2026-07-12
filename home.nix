@@ -12,6 +12,7 @@ in
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    ripgrep
     jq
     kubectl
     neovim
