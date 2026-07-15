@@ -35,6 +35,12 @@
     onActivation.cleanup = "zap";  # remove anything not listed here
     onActivation.autoUpdate = true;
     onActivation.extraFlags = [ "--force" ];
+    taps = [
+      {
+        name = "hashicorp/tap";
+        trusted = true;
+      }
+    ];
     brews = [
       "bob"
       "cocoapods"
@@ -42,12 +48,14 @@
       "doctl"
       "fastlane"
       "fzf"
+      "hashicorp/tap/terraform"
       "gh"
       "go"
       "golang-migrate"
       "openjdk"
       "gradle"
       "helm"
+      "kubeconform"
       "kubectx"
       "openjdk@21"
       "pandoc"
@@ -57,7 +65,10 @@
       "pyenv"
       "rbenv"
       "ripgrep"
+      "shellcheck"
+      "sqlc"
       "tmux"
+      "uv"
       "xcode-build-server"
       "xcodegen"
       "zig"
