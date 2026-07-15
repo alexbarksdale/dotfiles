@@ -37,6 +37,10 @@
     onActivation.extraFlags = [ "--force" ];
     taps = [
       {
+        name = "datadog-labs/pack";
+        trusted = true;
+      }
+      {
         name = "hashicorp/tap";
         trusted = true;
       }
@@ -48,6 +52,7 @@
       "doctl"
       "fastlane"
       "fzf"
+      "datadog-labs/pack/pup"
       "hashicorp/tap/terraform"
       "gh"
       "go"
