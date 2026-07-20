@@ -57,6 +57,7 @@ in
       k = "kubectl";
       api = "kubectl -n api";
       evp = "kubectl -n event-processor";
+      pins = "kubectl -n pins";
     };
 
     profileExtra = ''
