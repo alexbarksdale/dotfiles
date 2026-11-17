@@ -122,6 +122,9 @@ in
   home.file.".config/nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/nvim";
 
+  home.file.".config/karabiner".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/karabiner";
+
   home.file.".tmux.conf".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/tmux/tmux.conf";
 

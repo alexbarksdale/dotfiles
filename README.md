@@ -11,6 +11,7 @@ It uses nix-darwin, Home Manager, and nix-homebrew to make a new Mac reproducibl
 | `configuration.nix` | System-level macOS defaults, nix-homebrew setup, Homebrew formulae, and Homebrew casks. |
 | `home.nix` | User-level Home Manager packages, shell configuration, Git settings, and symlinks. |
 | `home/.config/ghostty` | Ghostty config and themes. |
+| `home/.config/karabiner` | Karabiner-Elements key remapping config. |
 | `home/.config/nvim` | Neovim config. |
 | `home/.config/tmux/tmux.conf` | tmux config source. |
 | `home/AGENTS.md` | Shared global agent instructions for Claude and Codex. |
@@ -24,6 +25,7 @@ Home Manager links config files from this repo into the home directory.
 | Source in repo | Target on machine |
 |----------------|-------------------|
 | `home/.config/ghostty` | `~/.config/ghostty` |
+| `home/.config/karabiner` | `~/.config/karabiner` |
 | `home/.config/nvim` | `~/.config/nvim` |
 | `home/.config/tmux/tmux.conf` | `~/.tmux.conf` |
 | `home/AGENTS.md` | `~/.claude/CLAUDE.md` |
